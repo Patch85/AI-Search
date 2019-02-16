@@ -6,11 +6,10 @@
 * Assignment 2: Implementation of Search Methods
 */
 
-
 public class searchMethods {
 
-
 	/**
+	 * graph
 	 * An  adjacency matrix, representing a graph.
 	 * The graph is initialized with no connecting edges, filled with 0s
 	 * @param nodes: the integer number of nodes in the graph
@@ -27,6 +26,7 @@ public class searchMethods {
 	}
 
 	/**
+	 * edge
 	 * A method for editing the adjacency matrix to account for connected nodes
 	 * The default graph is set to all 0s, meaning no nodes are connected by edges
 	 * Use 1 for representing the existence of an edge
@@ -41,15 +41,22 @@ public class searchMethods {
 		graph[node1 -1][node2 -1] = weight;
 	}
 
+	/**
+	 * printMatrix
+	 * A method for printing an adjacency matrix.
+	 * @param matrix: int[][] a 2D matrix of integers; the adjacency matrix
+	 * @return void
+	 */
 	private static void printMatrix(int[][] matrix) {
+		System.out.println();
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				System.out.print(matrix[i][j] + " ");
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
-
 
 	public static void main(String[] args) {
 		int[][] g1 = graph(7); // create a graph
@@ -88,6 +95,7 @@ public class searchMethods {
 		edge(g1, 7, 4, 1);
 		edge(g1, 7, 6, 1);
 
+		System.out.println("Graph 1: Unweighted");
 		printMatrix(g1); // Prints the adjacency matrix for graph g1
 
 		// g2 is the weighted version of graph g1
@@ -126,6 +134,7 @@ public class searchMethods {
 		edge(g2, 7, 4, 4);
 		edge(g2, 7, 6, 1);
 
+		System.out.println("Graph 2: Graph 1 with weighted edges.");
 		printMatrix(g2);
 	}
 
