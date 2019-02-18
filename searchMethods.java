@@ -98,17 +98,21 @@ public class searchMethods {
  */
 private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
 	boolean found = false; // true if accept state (lookFor) is reached
+	int currentNode = startAt;
 	if(startAt == lookFor) {
 		// Accept state is reached (base case)
-		System.out.println("Succesfully found node " + lookFor);
+		visited[currentNode-1] = true;
+		System.out.print(currentNode);
+		System.out.println("\nSuccesfully found node " + lookFor);
+		found = true;
 	}
 	else{
-		int currentNode = startAt;
+
 		// Still searching for the accept state
 		// If the current node hasn't been visited yet...
 		if(!visited[currentNode-1]){ // -1 to account for being off by one in node labels
 			visited[currentNode-1] = true; // Set the current node to visited.
-			// Add the curent node to the search path.
+			// Add the current node to the search path.
 			System.out.print(currentNode + " ");
 
 			for (int i = 0; i < graph[currentNode].length; i++ ) {
@@ -116,7 +120,7 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 				// that hasn't been visited yet...
 				if ((graph[currentNode][i] >=1) && !visited[currentNode]){
 					// Recursively call the DFS
-					DFS(graph, currentNode +1, lookFor, visited);
+					DFS(graph, currentNode+1, lookFor, visited);
 				}
 			}
 		}
@@ -209,5 +213,4 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 		System.out.println("Searching on graph 1... \n");
 	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
 	}
-
 }
