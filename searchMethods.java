@@ -93,12 +93,43 @@ public class searchMethods {
  * @param graph: int[][]: an adjacency matrix representing a graph
  * @param startAt: int: the start state, or the node from which the search begins
  * @param lookFor: int: the accept state, or the node being searched for
- * Since our graph's nodes are numbered 1-n, and the start and accept states
- * are indexes in the adjacency matrix, we need to account for being off-by-one.
+ * @param visited: boolean[] : A list representing the visited status of each node
  * @return: true if the accept state has been reached, false otherwise.
  */
-private static boolean DFS(int[][] graph, int startAt, int lookFor){
-	boolean found = false;
+private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
+	boolean found = false; // true if accept state (lookFor) is reached
+
+	// The total path cost of traveling from the start state (startAt) to the
+	// accept state (lookFor)
+	int pathCost = 0;
+
+	// Since our graph's nodes are numbered 1-n, and the start and accept states
+  // are indexes in the adjacency matrix, we need to account for being off-by-one.
+	int startState = startAt - 1;
+	int acceptState = lookFor - 1;
+	int currentState = startState; //The 'current' state of the agent, during search
+
+	//  Print messages indicating the serach type with desired start and accept states
+	System.out.println("Depth-First Search");
+	System.out.println("Starting at node: " + startAt);
+	System.out.println("Searching for node: " + lookFor + "\n");
+
+	System.out.print("Search path: " );
+	// Begin the search
+	if(!visited[currentState]){ // If the current node hasn't been visited yet
+		visited[currentState] = true; // Mark the current node as visited
+		// Add the current node to the search path
+		System.out.print((currentState + 1) + " ");
+
+		for(int i = 0; i < graph[currentState].length; i++){
+			// If there is an edge between the nodes, and it hasn't been visited...
+			if (graph[currentState][i] >= 1 && !visited[i]){
+				pathCost += graph[currentState][i];
+			}
+		}
+
+		System.out.println("\nTotal path cost for the search: " + pathCost);
+	}
 
 	return found;
 }
@@ -184,6 +215,9 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor){
 
 		System.out.println("Graph 2: Graph 1 with weighted edges.");
 		printMatrix(g2);
+
+		System.out.println("Searching on graph 1... \n");
+	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
 	}
 
 }
