@@ -98,43 +98,29 @@ public class searchMethods {
  */
 private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
 	boolean found = false; // true if accept state (lookFor) is reached
+	if(startAt == lookFor) {
+		// Accept state is reached (base case)
+		System.out.println("Succesfully found node " + lookFor);
+	}
+	else{
+		int currentNode = startAt;
+		// Still searching for the accept state
+		// If the current node hasn't been visited yet...
+		if(!visited[currentNode-1]){ // -1 to account for being off by one in node labels
+			visited[currentNode-1] = true; // Set the current node to visited.
+			// Add the curent node to the search path.
+			System.out.print(currentNode + " ");
 
-	// The total path cost of traveling from the start state (startAt) to the
-	// accept state (lookFor)
-	int pathCost = 0;
-
-	// Since our graph's nodes are numbered 1-n, and the start and accept states
-  // are indexes in the adjacency matrix, we need to account for being off-by-one.
-	int startState = startAt - 1;
-	int acceptState = lookFor - 1;
-	int currentState = startState; //The 'current' state of the agent, during search
-
-	//  Print messages indicating the serach type with desired start and accept states
-	System.out.println("Depth-First Search");
-	System.out.println("Starting at node: " + startAt);
-	System.out.println("Searching for node: " + lookFor + "\n");
-
-	System.out.print("Search path: " );
-	// Begin the search
-
-	// Check if the current state is the accept states
-	if(currentState != acceptState){
-		if(!visited[currentState]){ // If the current node hasn't been visited yet
-			visited[currentState] = true; // Mark the current node as visited
-			// Add the current node to the search path
-			System.out.print((currentState + 1) + " ");
-
-			for(int i = 0; i < graph[currentState].length; i++){
-				// If there is an edge between the nodes, and it hasn't been visited...
-				if (graph[currentState][i] >= 1 && !visited[i]){
-					pathCost += graph[currentState][i];
-					currentState = i;					
+			for (int i = 0; i < graph[currentNode].length; i++ ) {
+				// If an edge exists between the current node and another node
+				// that hasn't been visited yet...
+				if ((graph[currentNode][i] >=1) && !visited[currentNode]){
+					// Recursively call the DFS
+					DFS(graph, currentNode +1, lookFor, visited);
 				}
 			}
 		}
-		System.out.println("\nTotal path cost for the search: " + pathCost);
 	}
-
 	return found;
 }
 
