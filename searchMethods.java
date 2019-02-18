@@ -116,18 +116,22 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 
 	System.out.print("Search path: " );
 	// Begin the search
-	if(!visited[currentState]){ // If the current node hasn't been visited yet
-		visited[currentState] = true; // Mark the current node as visited
-		// Add the current node to the search path
-		System.out.print((currentState + 1) + " ");
 
-		for(int i = 0; i < graph[currentState].length; i++){
-			// If there is an edge between the nodes, and it hasn't been visited...
-			if (graph[currentState][i] >= 1 && !visited[i]){
-				pathCost += graph[currentState][i];
+	// Check if the current state is the accept states
+	if(currentState != acceptState){
+		if(!visited[currentState]){ // If the current node hasn't been visited yet
+			visited[currentState] = true; // Mark the current node as visited
+			// Add the current node to the search path
+			System.out.print((currentState + 1) + " ");
+
+			for(int i = 0; i < graph[currentState].length; i++){
+				// If there is an edge between the nodes, and it hasn't been visited...
+				if (graph[currentState][i] >= 1 && !visited[i]){
+					pathCost += graph[currentState][i];
+					currentState = i;					
+				}
 			}
 		}
-
 		System.out.println("\nTotal path cost for the search: " + pathCost);
 	}
 
