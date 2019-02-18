@@ -58,8 +58,54 @@ public class searchMethods {
 		System.out.println();
 	}
 
+	/**
+	 * visited
+	 * Creates an array of boolean values, representing the nodes of a graph.
+	 * True if the node has been visited, false otherwise.
+	 * Initialized with all false values (not visited yet)
+	 * @param nodes: the integer number of nodes in the Graph
+	 * @return visited: an array of boolean values
+	 */
+	private static boolean[] visitedList(int nodes){
+		boolean[] visited = new boolean[nodes];
+		for (int i = 0; i < visited.length; i++ ) {
+			visited[i] = false;
+		}
+		return visited;
+	}
+
+	/**
+	 * resetVisited
+	 * a method to reset the list of nodes to all 'false',
+	 * meaning they have not yet been visited
+	 */
+	private static void resetVisited(boolean[] visitedList){
+		for (int i = 0; i < visitedList.length; i++ ) {
+			visitedList[i] = false;
+		}
+	}
+
+
+/**
+ * DFS
+ * A Depth-frst search method, takes an adjacency matrix, a start state and an
+ * accept state. Returns true if the accept state is reached, false otherwise.
+ * @param graph: int[][]: an adjacency matrix representing a graph
+ * @param startAt: int: the start state, or the node from which the search begins
+ * @param lookFor: int: the accept state, or the node being searched for
+ * Since our graph's nodes are numbered 1-n, and the start and accept states
+ * are indexes in the adjacency matrix, we need to account for being off-by-one.
+ * @return: true if the accept state has been reached, false otherwise.
+ */
+private static boolean DFS(int[][] graph, int startAt, int lookFor){
+	boolean found = false;
+
+	return found;
+}
+
 	public static void main(String[] args) {
-		int[][] g1 = graph(7); // create a graph
+		int [][] g1 = graph(7); // create a graph
+		boolean[] g1Visited = visitedList(7); // a list for tracking visited nodes
 
 		// Unweighted: update graph to correctly represent the unweighted edges
 		edge(g1, 1, 2, 1); // Node 1 connects to nodes 2, 3 and 5
@@ -100,6 +146,8 @@ public class searchMethods {
 
 		// g2 is the weighted version of graph g1
 		int[][] g2 = g1;
+		// a list for tacking whether a node in g2 has been visited
+		boolean[] g2Visited = visitedList(7);
 
 		edge(g2, 1, 2, 3); // Node 1 connects to nodes 2, 3 and 5
 		edge(g2, 1, 3, 1);
