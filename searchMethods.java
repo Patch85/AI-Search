@@ -58,8 +58,89 @@ public class searchMethods {
 		System.out.println();
 	}
 
+	/**
+	 * visited
+	 * Creates an array of boolean values, representing the nodes of a graph.
+	 * True if the node has been visited, false otherwise.
+	 * Initialized with all false values (not visited yet)
+	 * @param nodes: the integer number of nodes in the Graph
+	 * @return visited: an array of boolean values
+	 */
+	private static boolean[] visitedList(int nodes){
+		boolean[] visited = new boolean[nodes];
+		for (int i = 0; i < visited.length; i++ ) {
+			visited[i] = false;
+		}
+		return visited;
+	}
+
+	/**
+	 * resetVisited
+	 * a method to reset the list of nodes to all 'false',
+	 * meaning they have not yet been visited
+	 */
+	private static void resetVisited(boolean[] visitedList){
+		for (int i = 0; i < visitedList.length; i++ ) {
+			visitedList[i] = false;
+		}
+	}
+
+
+/**
+ * DFS
+ * A Depth-frst search method, takes an adjacency matrix, a start state and an
+ * accept state. Returns true if the accept state is reached, false otherwise.
+ * @param graph: int[][]: an adjacency matrix representing a graph
+ * @param startAt: int: the start state, or the node from which the search begins
+ * @param lookFor: int: the accept state, or the node being searched for
+ * @param visited: boolean[] : A list representing the visited status of each node
+ * @return: true if the accept state has been reached, false otherwise.
+ */
+private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
+	boolean found = false; // true if accept state (lookFor) is reached
+
+	// The total path cost of traveling from the start state (startAt) to the
+	// accept state (lookFor)
+	int pathCost = 0;
+
+	// Since our graph's nodes are numbered 1-n, and the start and accept states
+  // are indexes in the adjacency matrix, we need to account for being off-by-one.
+	int startState = startAt - 1;
+	int acceptState = lookFor - 1;
+	int currentState = startState; //The 'current' state of the agent, during search
+
+	//  Print messages indicating the serach type with desired start and accept states
+	System.out.println("Depth-First Search");
+	System.out.println("Starting at node: " + startAt);
+	System.out.println("Searching for node: " + lookFor + "\n");
+
+	System.out.print("Search path: " );
+	// Begin the search
+
+	// Check if the current state is the accept states
+	if(currentState != acceptState){
+		if(!visited[currentState]){ // If the current node hasn't been visited yet
+			visited[currentState] = true; // Mark the current node as visited
+			// Add the current node to the search path
+			System.out.print((currentState + 1) + " ");
+
+			for(int i = 0; i < graph[currentState].length; i++){
+				// If there is an edge between the nodes, and it hasn't been visited...
+				if (graph[currentState][i] >= 1 && !visited[i]){
+					pathCost += graph[currentState][i];
+					currentState = i;					
+				}
+			}
+		}
+		System.out.println("\nTotal path cost for the search: " + pathCost);
+	}
+
+	return found;
+}
+
 	public static void main(String[] args) {
-		int[][] g1 = graph(7); // create a graph
+		int [][] g1 = graph(7); // create a graph
+		boolean[] g1Visited = visitedList(7); // a list for tracking visited nodes
 
 		// Unweighted: update graph to correctly represent the unweighted edges
 		edge(g1, 1, 2, 1); // Node 1 connects to nodes 2, 3 and 5
@@ -100,6 +181,8 @@ public class searchMethods {
 
 		// g2 is the weighted version of graph g1
 		int[][] g2 = g1;
+		// a list for tacking whether a node in g2 has been visited
+		boolean[] g2Visited = visitedList(7);
 
 		edge(g2, 1, 2, 3); // Node 1 connects to nodes 2, 3 and 5
 		edge(g2, 1, 3, 1);
@@ -136,6 +219,9 @@ public class searchMethods {
 
 		System.out.println("Graph 2: Graph 1 with weighted edges.");
 		printMatrix(g2);
+
+		System.out.println("Searching on graph 1... \n");
+	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
 	}
 
 }
