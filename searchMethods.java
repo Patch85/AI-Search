@@ -43,15 +43,26 @@ public class searchMethods {
 
 	/**
 	 * printMatrix
-	 * A method for printing an adjacency matrix.
+	 * A method for printing an adjacency matrix. Formatted to display the node
+	 * numbers across the top and left side for easy cross reference.
 	 * @param matrix: int[][] a 2D matrix of integers; the adjacency matrix
 	 * @return void
 	 */
 	private static void printMatrix(int[][] matrix) {
 		System.out.println();
+		// Print node numbers across the top
+		System.out.print("N   ");
+		for(int n = 0; n < matrix.length; n++){
+			System.out.print(n+1 + "  ");
+		}
+		System.out.println("\n");
+		int node = 1;
 		for (int i = 0; i < matrix.length; i++) {
+			System.out.print(node + ": ");
+			node++;
 			for (int j = 0; j < matrix.length; j++) {
-				System.out.print(matrix[i][j] + " ");
+
+				System.out.print(" " + matrix[i][j] + " ");
 			}
 			System.out.println();
 		}
@@ -88,7 +99,7 @@ public class searchMethods {
 
 /**
  * DFS
- * A Depth-frst search method, takes an adjacency matrix, a start state and an
+ * A Depth-first search method, takes an adjacency matrix, a start state and an
  * accept state. Returns true if the accept state is reached, false otherwise.
  * @param graph: int[][]: an adjacency matrix representing a graph
  * @param startAt: int: the start state, or the node from which the search begins
@@ -96,41 +107,45 @@ public class searchMethods {
  * @param visited: boolean[] : A list representing the visited status of each node
  * @return: true if the accept state has been reached, false otherwise.
  */
-private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
-	boolean found = false; // true if accept state (lookFor) is reached
+private static void DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
 	int currentNode = startAt;
+	int pathCost = 0;
+	int nextNode = 0;
 	if(startAt == lookFor) {
 		// Accept state is reached (base case)
 		visited[currentNode-1] = true;
+		//System.out.print(currentNode);
 		System.out.print(currentNode);
 		System.out.println("\nSuccesfully found node " + lookFor);
-		found = true;
 	}
 	else{
-
 		// Still searching for the accept state
 		// If the current node hasn't been visited yet...
 		if(!visited[currentNode-1]){ // -1 to account for being off by one in node labels
-			visited[currentNode-1] = true; // Set the current node to visited.
 			// Add the current node to the search path.
 			System.out.print(currentNode + " ");
+			// Set the current node to visited.
+			visited[currentNode-1] = true;
 
-			for (int i = 0; i < graph[currentNode].length; i++ ) {
+			// For the current node, check the adjacency matrix for an edge
+			// that connects to a node that has not yet been visited.
+			for (int i = 0; i < graph[currentNode-1].length; i++ ) {
 				// If an edge exists between the current node and another node
 				// that hasn't been visited yet...
-				if ((graph[currentNode][i] >=1) && !visited[currentNode]){
+				if ((graph[currentNode-1][i] >=1) && !visited[i]){
+					// Assign that node to next node.
+					nextNode = i+1;
 					// Recursively call the DFS
-					DFS(graph, currentNode+1, lookFor, visited);
+					DFS(graph, nextNode, lookFor, visited);
 				}
 			}
 		}
 	}
-	return found;
 }
 
 	public static void main(String[] args) {
 		int [][] g1 = graph(7); // create a graph
-		boolean[] g1Visited = visitedList(7); // a list for tracking visited nodes
+		boolean[] g1Visited = visitedList(7); // an array for tracking visited nodes
 
 		// Unweighted: update graph to correctly represent the unweighted edges
 		edge(g1, 1, 2, 1); // Node 1 connects to nodes 2, 3 and 5
@@ -171,7 +186,7 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 
 		// g2 is the weighted version of graph g1
 		int[][] g2 = g1;
-		// a list for tacking whether a node in g2 has been visited
+		// an array for tacking whether a node in g2 has been visited
 		boolean[] g2Visited = visitedList(7);
 
 		edge(g2, 1, 2, 3); // Node 1 connects to nodes 2, 3 and 5
@@ -210,7 +225,18 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 		System.out.println("Graph 2: Graph 1 with weighted edges.");
 		printMatrix(g2);
 
-		System.out.println("Searching on graph 1... \n");
-	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
+		for (int i = 1;i < 8; i++ ) {
+			resetVisited(g1Visited);
+			System.out.println("\n\nSearching on graph 1 for node  " + i);
+			System.out.print("Search path: ");
+			DFS(g1, 1, i, g1Visited);
+		}
+
+		for (int i = 1;i < 8; i++ ) {
+			resetVisited(g2Visited);
+			System.out.println("\n\nSearching on graph 2 for node  " + i);
+			System.out.print("Search path: ");
+			DFS(g1, 1, i, g2Visited);
+		}
 	}
 }
