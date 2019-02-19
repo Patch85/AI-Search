@@ -49,9 +49,19 @@ public class searchMethods {
 	 */
 	private static void printMatrix(int[][] matrix) {
 		System.out.println();
+		// Print node numbers across the top
+		System.out.print("N   ");
+		for(int n = 0; n < matrix.length; n++){
+			System.out.print(n+1 + "  ");
+		}
+		System.out.println();
+		int node = 1;
 		for (int i = 0; i < matrix.length; i++) {
+			System.out.print(node + ": ");
+			node++;
 			for (int j = 0; j < matrix.length; j++) {
-				System.out.print(matrix[i][j] + " ");
+
+				System.out.print(" " + matrix[i][j] + " ");
 			}
 			System.out.println();
 		}
@@ -107,7 +117,6 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 		found = true;
 	}
 	else{
-
 		// Still searching for the accept state
 		// If the current node hasn't been visited yet...
 		if(!visited[currentNode-1]){ // -1 to account for being off by one in node labels
@@ -211,6 +220,7 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 		printMatrix(g2);
 
 		System.out.println("Searching on graph 1... \n");
+		System.out.print("Search path: ");
 	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
 	}
 }
