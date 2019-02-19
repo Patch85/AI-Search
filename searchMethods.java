@@ -54,7 +54,7 @@ public class searchMethods {
 		for(int n = 0; n < matrix.length; n++){
 			System.out.print(n+1 + "  ");
 		}
-		System.out.println();
+		System.out.println("\n");
 		int node = 1;
 		for (int i = 0; i < matrix.length; i++) {
 			System.out.print(node + ": ");
@@ -106,15 +106,14 @@ public class searchMethods {
  * @param visited: boolean[] : A list representing the visited status of each node
  * @return: true if the accept state has been reached, false otherwise.
  */
-private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
-	boolean found = false; // true if accept state (lookFor) is reached
+private static void DFS(int[][] graph, int startAt, int lookFor, boolean[] visited){
 	int currentNode = startAt;
+	int pathCost = 0;
 	if(startAt == lookFor) {
 		// Accept state is reached (base case)
 		visited[currentNode-1] = true;
-		System.out.print(currentNode);
+		//System.out.print(currentNode);
 		System.out.println("\nSuccesfully found node " + lookFor);
-		found = true;
 	}
 	else{
 		// Still searching for the accept state
@@ -134,7 +133,6 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 			}
 		}
 	}
-	return found;
 }
 
 	public static void main(String[] args) {
@@ -221,6 +219,6 @@ private static boolean DFS(int[][] graph, int startAt, int lookFor, boolean[] vi
 
 		System.out.println("Searching on graph 1... \n");
 		System.out.print("Search path: ");
-	 	boolean search1 = DFS(g1, 1, 7, g1Visited);
+	  DFS(g1, 1, 7, g1Visited);
 	}
 }
