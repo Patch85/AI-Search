@@ -1,4 +1,4 @@
-/** graph.java
+/** Graph.java
 * A class for building graphs, with methods for editing the graph and
 * searching it.*
 * @author Dillon John
