@@ -247,8 +247,9 @@ public class Graph {
 		g1.edge(7, 4, 1);
 		g1.edge(7, 6, 1);
     g1.printMatrix();
-    g1.tryEmAll();
+
     g1.depthFirst(1, 7);
+    g1.depthFirst(3, 6);
 
     // Describe and build graph 2
     System.out.println("\n\n\nThis graph has weighted, non-directional edges.");
@@ -286,7 +287,8 @@ public class Graph {
     g2.edge(7, 4, 4);
     g2.edge(7, 6, 1);
     g2.printMatrix();
-    g2.tryEmAll();
+    g2.depthFirst(1, 7);
+    g2.depthFirst(3, 6);
 
     System.out.println("\n\nThis graph has unweighted, directional edges.");
     Graph g3 = new Graph(7, "Graph 3");
@@ -314,7 +316,8 @@ public class Graph {
     g3.edge(7, 2, 1); // Node 7 connects to 2, 3
     g3.edge(7, 3, 1);
     g3.printMatrix();
-    g3.tryEmAll();
+    g3.depthFirst(1, 7);
+    g3.depthFirst(3, 6);
 
     System.out.println("\n\nThis graph has weighted, directional edges.");
     Graph g4 = new Graph(7, "Graph 4");
@@ -342,14 +345,16 @@ public class Graph {
     g4.edge(7, 2, 1); // Node 7 connects to 2, 3
     g4.edge(7, 3, 1);
     g4.printMatrix();
-    g4.tryEmAll();
+    g4.depthFirst(1, 7);
+    g4.depthFirst(3, 6);
 
     System.out.println("\n\nThis graph has 3 nodes, with no edges.");
     Graph g5 = new Graph(3, "Graph 5");
     g5.printMatrix();
     // Search through graph five, using every valid combination of
     // start and accept states.
-    g5.tryEmAll();
+    g5.depthFirst(1, 3);
+    g5.depthFirst(3,3);
 
     System.out.println("\n\nThis graph has 3 nodes, with unweighted, directional edges.");
     Graph g6 = g5;
@@ -361,6 +366,7 @@ public class Graph {
 
     g6.edge(3, 1, 1); // Node 3 connects to 1
     g6.printMatrix();
-    g6.tryEmAll();
+    g6.depthFirst(1, 3);
+    g6.depthFirst(3, 2);
   }
 }
