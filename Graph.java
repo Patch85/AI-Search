@@ -215,37 +215,37 @@ public class Graph {
     System.out.println("\n\nThis graph has unweighted, non-directional edges.");
     Graph g1 = new Graph(7, "Graph 1");
     g1.edge(1, 2, 1); // Node 1 connects to nodes 2, 3 and 5
-		g1.edge(1, 3, 1);
-		g1.edge(1, 5, 1);
+    g1.edge(1, 3, 1);
+    g1.edge(1, 5, 1);
 
-		g1.edge(2, 1, 1); // Node 2 connects to 1, 3, 4, 7
-		g1.edge(2, 3, 1);
-		g1.edge(2, 4, 1);
-		g1.edge(2, 7, 1);
+    g1.edge(2, 1, 1); // Node 2 connects to 1, 3, 4, 7
+    g1.edge(2, 3, 1);
+    g1.edge(2, 4, 1);
+    g1.edge(2, 7, 1);
 
-		g1.edge(3, 1, 1); // Node 3 connects to 1, 2, 4, 5, 6, 7
-		g1.edge(3, 2, 1);
-		g1.edge(3, 4, 1);
-		g1.edge(3, 5, 1);
-		g1.edge(3, 6, 1);
-		g1.edge(3, 7, 1);
+    g1.edge(3, 1, 1); // Node 3 connects to 1, 2, 4, 5, 6, 7
+    g1.edge(3, 2, 1);
+    g1.edge(3, 4, 1);
+    g1.edge(3, 5, 1);
+    g1.edge(3, 6, 1);
+    g1.edge(3, 7, 1);
 
-		g1.edge(4, 2, 1); // Node 4 connects to 2, 3, 7
-		g1.edge(4, 3, 1);
-		g1.edge(4, 7, 1);
+    g1.edge(4, 2, 1); // Node 4 connects to 2, 3, 7
+    g1.edge(4, 3, 1);
+    g1.edge(4, 7, 1);
 
-		g1.edge(5, 1, 1); // Node 5 connects to 1, 3, 6
-		g1.edge(5, 3, 1);
-		g1.edge(5, 6, 1);
+    g1.edge(5, 1, 1); // Node 5 connects to 1, 3, 6
+    g1.edge(5, 3, 1);
+    g1.edge(5, 6, 1);
 
-		g1.edge(6, 3, 1); // Node 6 connects to 3, 5, 7
-		g1.edge(6, 5, 1);
-		g1.edge(6, 7, 1);
+    g1.edge(6, 3, 1); // Node 6 connects to 3, 5, 7
+    g1.edge(6, 5, 1);
+    g1.edge(6, 7, 1);
 
-		g1.edge(7, 2, 1); // Node 7 connects to 2, 3, 4, 6
-		g1.edge(7, 3, 1);
-		g1.edge(7, 4, 1);
-		g1.edge(7, 6, 1);
+    g1.edge(7, 2, 1); // Node 7 connects to 2, 3, 4, 6
+    g1.edge(7, 3, 1);
+    g1.edge(7, 4, 1);
+    g1.edge(7, 6, 1);
     g1.printMatrix();
 
     g1.depthFirst(1, 7);
