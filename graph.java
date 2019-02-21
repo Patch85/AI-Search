@@ -1,6 +1,10 @@
 /** graph.java
-* A class for building graphs, with methods for manipulating and seraching them
+* A class for building graphs, with methods for editing the graph and
+* searching it.*
 * @author Dillon John
+* CSIT357-02 Artificial Intelligence
+* Dr. Aparna Varde
+* Assignment 2: Implementation of Search Methods
 */
 import java.util.ArrayList;
 
@@ -57,7 +61,6 @@ public class Graph {
       System.out.print(node + ": ");
       node++;
       for (int j = 0; j < matrix.length; j++) {
-
         System.out.print(" " + matrix[i][j] + " ");
       }
       System.out.println();
@@ -103,14 +106,14 @@ public class Graph {
    * it finds the accept state. Tracks the path cost as it traverses the graph.
    * @param startAt: int: the start state, or the node from which the search begins
    * @param lookFor: int: the accept state, or the node being searched for
+   * @return void
    */
-   private void DFS(int startAt, int lookFor){
+   private boolean DFS(int startAt, int lookFor){
      // Since our nodes are labeled 1-n, subtract 1 for indexing
      int currentNode = startAt -1;
      int nextNode = 0;
 
      visited[currentNode] = true;
-
      if(!found){
        if(startAt == lookFor) {
          // The current node is the accept state.
@@ -119,11 +122,15 @@ public class Graph {
          // Use startAt, since that has the appropriate node number, rather
          // than the index of that node in the array or matrix
          searchPath.add(startAt);
-         // Recursively call DFS
-         this.DFS(startAt, lookFor);
+         // Accept state has been reached
+         System.out.println("Successfully found node " + lookFor + "!");
+         System.out.println("Total path cost: " + pathCost);
+         System.out.print("Search path: ");
+         System.out.print(searchPath);
+         System.out.println("\n");
+         return found;
        }
-
-        else{
+       else{
          // Still searching for the accept state
          // Check for an edge connecting the current node to the accept state
          if(matrix[currentNode][lookFor-1] > 0){
@@ -139,7 +146,6 @@ public class Graph {
            // Recursively call DFS
            this.DFS(nextNode, lookFor);
           }
-
           // If there is no edge connecting the current node to the accept
           // state, look for an edge connecting to a node that hasn't been
           // visited yet.
@@ -161,17 +167,47 @@ public class Graph {
           }
         }
       }
+      return found;
+    }
 
-     else{
-       // Accept state has been reached
-       System.out.println("Successfully found node " + lookFor + "!");
-       System.out.println("Total path cost: " + pathCost);
-       System.out.print("Search path: ");
-       System.out.print(searchPath);
-       System.out.println("\n");
-       return;
+    /**
+     * tryEmAll
+     * A method for testing every valid combination of start and accept states
+     * for a given graph.
+     * @return: void;
+     */
+     private void tryEmAll(){
+       for (int node = 0; node < matrix[1].length; node++) {
+         for(int vertex = 0; vertex < matrix[1].length; vertex++){
+           System.out.println("Starting from " + (node+1) + ", searching for " + (vertex+1) + ".");
+           this.reset();
+           if(!this.DFS(node + 1, vertex + 1)){
+             System.out.println("Could not find " + (vertex+1) + " from " + (node+1) + ".");
+             System.out.println("Total path cost: " + pathCost);
+             System.out.println("Search path: " + searchPath + "\n");
+
+           }
+         }
+       }
      }
-   }
+
+     /**
+     * depthFirst
+     * A method for performing a single depth-first search, with appropriate
+     * success and failure messages.
+     * @param :startFrom: the starting node
+     * @param :lookFor: the accept state
+     * @return: void
+     */
+     private void depthFirst(int startFrom, int lookFor){
+       this.reset();
+       System.out.println("Starting from " + startFrom + ", searching for " + lookFor + ".");
+       if(!this.DFS(startFrom, lookFor)){
+         System.out.println("Could not find " + startFrom + " from " + lookFor + ".");
+         System.out.println("Total path cost: " + pathCost);
+         System.out.println("Search path: " + searchPath + "\n");
+       }
+     }
 
   public static void main(String[] args){
 
@@ -211,12 +247,8 @@ public class Graph {
 		g1.edge(7, 4, 1);
 		g1.edge(7, 6, 1);
     g1.printMatrix();
-
-    // Search through graph one for each possible node, starting from node 3
-    for (int node = 0; node < g1.matrix[1].length; node++) {
-      g1.reset();
-      g1.DFS(3, node+1);
-    }
+    g1.tryEmAll();
+    g1.depthFirst(1, 7);
 
     // Describe and build graph 2
     System.out.println("\n\n\nThis graph has weighted, non-directional edges.");
@@ -254,11 +286,81 @@ public class Graph {
     g2.edge(7, 4, 4);
     g2.edge(7, 6, 1);
     g2.printMatrix();
+    g2.tryEmAll();
 
-    // Search through graph two for each possible node, starting from node 3
-    for (int node = 0; node < g2.matrix[1].length; node++) {
-      g2.reset();
-      g2.DFS(3, node+1);
-    }
+    System.out.println("\n\nThis graph has unweighted, directional edges.");
+    Graph g3 = new Graph(7, "Graph 3");
+    g3.edge(1, 2, 1); // Node 1 Connects to 2, 3, 5
+    g3.edge(1, 3, 1);
+    g3.edge(1, 5, 1);
+
+    g3.edge(2, 3, 1); // Node 2 connects to 3, 4, 7
+    g3.edge(2, 4, 1);
+    g3.edge(2, 7, 1);
+
+    g3.edge(3, 5, 1); // Node 3 connects to 5, 6
+    g3.edge(3, 6, 1);
+
+    g3.edge(4, 3, 1); // Node 4 connects to 3, 7
+    g3.edge(4, 7, 1);
+
+    g3.edge(5, 1, 1); // Node 5 connects to 1, 6
+    g3.edge(5, 6, 1);
+
+    g3.edge(6, 3, 1); // Node 6 connects to 3, 5, 7
+    g3.edge(6, 5, 1);
+    g3.edge(6, 7, 1);
+
+    g3.edge(7, 2, 1); // Node 7 connects to 2, 3
+    g3.edge(7, 3, 1);
+    g3.printMatrix();
+    g3.tryEmAll();
+
+    System.out.println("\n\nThis graph has weighted, directional edges.");
+    Graph g4 = new Graph(7, "Graph 4");
+    g4.edge(1, 2, 3); // Node 1 Connects to 2, 3, 5
+    g4.edge(1, 3, 1);
+    g4.edge(1, 5, 4);
+
+    g4.edge(2, 3, 2); // Node 2 connects to 3, 4, 7
+    g4.edge(2, 4, 1);
+    g4.edge(2, 7, 6);
+
+    g4.edge(3, 5, 3); // Node 3 connects to 5, 6
+    g4.edge(3, 6, 4);
+
+    g4.edge(4, 3, 1); // Node 4 connects to 3, 7
+    g4.edge(4, 7, 4);
+
+    g4.edge(5, 1, 4); // Node 5 connects to 1, 6
+    g4.edge(5, 6, 2);
+
+    g4.edge(6, 3, 1); // Node 6 connects to 3, 5, 7
+    g4.edge(6, 5, 1);
+    g4.edge(6, 7, 1);
+
+    g4.edge(7, 2, 1); // Node 7 connects to 2, 3
+    g4.edge(7, 3, 1);
+    g4.printMatrix();
+    g4.tryEmAll();
+
+    System.out.println("\n\nThis graph has 3 nodes, with no edges.");
+    Graph g5 = new Graph(3, "Graph 5");
+    g5.printMatrix();
+    // Search through graph five, using every valid combination of
+    // start and accept states.
+    g5.tryEmAll();
+
+    System.out.println("\n\nThis graph has 3 nodes, with unweighted, directional edges.");
+    Graph g6 = g5;
+    g6.title = "Graph 6";
+    g6.edge(1, 2, 1); // Node 1 connects to 2,3
+    g6.edge(1, 3, 1);
+
+    g6.edge(2, 3, 1); // Node 2 connects to 3
+
+    g6.edge(3, 1, 1); // Node 3 connects to 1
+    g6.printMatrix();
+    g6.tryEmAll();
   }
 }
